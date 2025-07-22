@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class exp3 {
     public static void main(String[] args) {
-        String jdbcUrl = "jdbc:oracle:thin:@//localhost:1521/ORCL"; // Adjust as needed
+        String jdbcUrl = "jdbc:oracle:thin:@//localhost:1521/ORCL";
         String username = "scott";
         String password = "tiger";
 
@@ -14,30 +14,23 @@ public class exp3 {
         Connection connection = null;
 
         try {
-            // Load Oracle JDBC driver
             Class.forName("oracle.jdbc.driver.OracleDriver");
-
-            // Connect to DB
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             System.out.println("Connected to Oracle Database successfully!");
 
-            // Prepare SQL INSERT statement with placeholders
             String insertSQL = "INSERT INTO MANI1 (RNO, NAME) VALUES (?, ?)";
             PreparedStatement pstmt = connection.prepareStatement(insertSQL);
 
-            // Take input from user
             System.out.print("Enter RNO (int): ");
             int rno = scanner.nextInt();
-            scanner.nextLine(); // consume leftover newline
+            scanner.nextLine();
 
             System.out.print("Enter NAME (string): ");
             String name = scanner.nextLine();
 
-            // Set parameters
             pstmt.setInt(1, rno);
             pstmt.setString(2, name);
 
-            // Execute INSERT
             int rowsInserted = pstmt.executeUpdate();
 
             if (rowsInserted > 0) {
@@ -46,7 +39,6 @@ public class exp3 {
                 System.out.println("Insert failed!");
             }
 
-            // Close PreparedStatement
             pstmt.close();
 
         } catch (SQLException e) {
@@ -54,7 +46,6 @@ public class exp3 {
         } catch (ClassNotFoundException e) {
             System.out.println("JDBC Driver not found: " + e.getMessage());
         } finally {
-            // Close scanner and connection
             scanner.close();
             try {
                 if (connection != null && !connection.isClosed()) {
