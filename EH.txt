@@ -1,0 +1,32 @@
+CREATE TABLE student (
+    sid NUMBER,
+    sname VARCHAR2(50),
+    sclass VARCHAR2(20)
+);
+
+-- Sample data
+INSERT INTO student VALUES (1, 'abhi', 'first');
+INSERT INTO student VALUES (2, 'sai', 'first');
+INSERT INTO student VALUES (3, 'ish', 'first');
+INSERT INTO student VALUES (4, 'ram', 'second');
+COMMIT;
+SET SERVEROUTPUT ON;
+
+DECLARE
+    stu_id   NUMBER;
+    stu_name VARCHAR2(50);
+    CURSOR stu_cur IS
+        SELECT sid, sname FROM student WHERE sclass = 'first';
+BEGIN
+    OPEN stu_cur;
+    LOOP
+        FETCH stu_cur INTO stu_id, stu_name;
+        EXIT WHEN stu_cur%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('student_id: ' || stu_id || ' student_name: ' || stu_name);
+    END LOOP;
+    CLOSE stu_cur;
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('No records found or an error occurred.');
+END;
+/
