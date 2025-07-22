@@ -6,34 +6,24 @@ import java.sql.SQLException;
 
 public class Example {
     public static void main(String[] args) {
-        // Oracle JDBC connection details
-        String jdbcUrl = "jdbc:oracle:thin:@//localhost:1521/ORCL"; // Adjust as needed
+        String jdbcUrl = "jdbc:oracle:thin:@//localhost:1521/ORCL";
         String username = "scott";
         String password = "tiger";
 
         Connection connection = null;
 
         try {
-            // Load Oracle JDBC driver
             Class.forName("oracle.jdbc.driver.OracleDriver");
-
-            // Establish the connection
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             System.out.println("Connected to Oracle Database successfully!");
 
-            // Create a Statement object
             Statement stmt = connection.createStatement();
-
-            // Execute SQL query to fetch all rows from MANI1
             String query = "SELECT * FROM MANI1";
-             
             ResultSet rs = stmt.executeQuery(query);
 
-            // Print table headers
             System.out.println("RNO\tNAME");
             System.out.println("----\t----------");
 
-            // Loop through the result set and print each row
             while (rs.next()) {
                 int rno = rs.getInt("RNO");
                 String name = rs.getString("NAME");
@@ -41,7 +31,6 @@ public class Example {
             }
             System.out.flush();
 
-            // Close ResultSet and Statement
             rs.close();
             stmt.close();
 
@@ -50,7 +39,6 @@ public class Example {
         } catch (ClassNotFoundException e) {
             System.out.println("JDBC Driver not found: " + e.getMessage());
         } finally {
-            // Close connection
             try {
                 if (connection != null && !connection.isClosed()) {
                     connection.close();
