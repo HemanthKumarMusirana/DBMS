@@ -1,0 +1,15 @@
+SET SERVEROUTPUT ON;
+
+DECLARE
+    n        PLS_INTEGER := 1;
+    endvalue PLS_INTEGER := 100;
+    sum1     PLS_INTEGER := 0;
+BEGIN
+    WHILE n <= endvalue LOOP
+        sum1 := sum1 + n;
+        n    := n + 1;
+    END LOOP;
+
+    DBMS_OUTPUT.PUT_LINE('Sum between 1 to ' || endvalue || ' is ' || sum1);
+END;
+/
